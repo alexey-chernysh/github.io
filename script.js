@@ -46,7 +46,7 @@
     }
 
     function onConnectionLost(response) {
-        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = "Current indoor temperature is unavailable";
+        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = "Нет связи с MQTT";
 //        $('#status').val('fail');
         setTimeout(MQTTconnect, reconnectTimeout);
  //       $('#status').val("reconnecting");
@@ -64,8 +64,8 @@
         min = timestamp % 60;
         timestamp = Math.floor(timestamp / 60);
         hour = 7 + timestamp % 24;
-        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = "Current indoor temperature is " + result[0];
-        document.querySelectorAll('.measurement_timestamp')[0].innerHTML = "at " + harold(hour) + ":" + harold(min) + ":" + harold(sec);
+        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = "Температура в доме " + result[0];
+        document.querySelectorAll('.measurement_timestamp')[0].innerHTML = "измерено в " + harold(hour) + ":" + harold(min) + ":" + harold(sec);
   
         function harold(standIn) {
             if (standIn < 10) {
