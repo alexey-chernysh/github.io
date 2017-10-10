@@ -42,7 +42,7 @@
     function onConnect() {
 //        $('#status').val('OK');
         // Connection succeeded; subscribe to our topic
-        mqtt.subscribe(topic, {qos: 0});
+        mqtt.subscribe(topic, {qos: 1});
     }
 
     function onConnectionLost(response) {
@@ -57,15 +57,18 @@
 
         var topic = message.destinationName;
         var payload = message.payloadString;
-        var result = payload.split("T");
-        var timestamp = parseInt(result[1]);
+        var result1 = payload.split("T");
+        var timestamp = parseInt(result1[1]);
         sec = timestamp % 60;
         timestamp = Math.floor(timestamp / 60);
         min = timestamp % 60;
         timestamp = Math.floor(timestamp / 60);
         hour = 7 + timestamp % 24;
-        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = "Температура в доме " + result[0];
-        document.querySelectorAll('.measurement_timestamp')[0].innerHTML = "измерено в " + harold(hour) + ":" + harold(min) + ":" + harold(sec);
+        var result2 = resu;t1.split("S");
+        var sensorID = result2[1];
+        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = "Температура в доме " + result2[0];
+        document.querySelectorAll('.temperature_sensor_id')[0].innerHTML = "измерена датчиком " + result2[1];
+        document.querySelectorAll('.measurement_timestamp')[0].innerHTML = "в " + harold(hour) + ":" + harold(min) + ":" + harold(sec);
   
         function harold(standIn) {
             if (standIn < 10) {
