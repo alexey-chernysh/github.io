@@ -5,7 +5,7 @@
  */
 
     var mqtt;
-    var reconnectTimeout = 2000;
+    var reconnectTimeout = 3000;
 
     function MQTTconnect() {
 	if (typeof path == "undefined") {
@@ -15,7 +15,8 @@
 			host,
 			port,
 			path,
-			"web_" + parseInt(Math.random() * 100, 10)
+			"", 10)
+//			"web_" + parseInt(Math.random() * 100, 10)
 	);
         var options = {
             timeout: 3,
@@ -23,7 +24,7 @@
             cleanSession: cleansession,
             onSuccess: onConnect,
             onFailure: function (message) {
-//                $('#status').val("Connection failed: " + message.errorMessage + "Retrying");
+                $('#status').val("Connection failed: " + message.errorMessage + "Retrying");
                 setTimeout(MQTTconnect, reconnectTimeout);
             }
         };
@@ -64,15 +65,16 @@
         min = timestamp % 60;
         timestamp = Math.floor(timestamp / 60);
         hour = 7 + timestamp % 24;
-        var result2 = resu;t1.split("S");
+        var result2 = result1.split("S");
+        var temperature = result2[0];
         var sensorID = result2[1];
-        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = "Температура в доме " + result2[0];
-        document.querySelectorAll('.temperature_sensor_id')[0].innerHTML = "измерена датчиком " + result2[1];
+        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = "Температура в доме " + temperature;
+        document.querySelectorAll('.temperature_sensor_id')[0].innerHTML = "измерена датчиком " + sensorID;
         document.querySelectorAll('.measurement_timestamp')[0].innerHTML = "в " + harold(hour) + ":" + harold(min) + ":" + harold(sec);
   
         function harold(standIn) {
             if (standIn < 10) {
-                standIn = '0' + standIn
+                standIn = '0' + standIn;
             }
             return standIn;
         }
