@@ -5,7 +5,7 @@
  */
 
     var mqtt;
-    var reconnectTimeout = 3000;
+    var reconnectTimeout = 100;
 
     function MQTTconnect() {
 	if (typeof path == "undefined") {
@@ -15,12 +15,10 @@
 			host,
 			port,
 			path,
-//			"", 10)
 			"web_" + parseInt(Math.random() * 100, 10)
-//			"web_" + parseInt(Math.random() * 100,)
 	);
         var options = {
-//            timeout: 3,
+            timeout: 3,
             useSSL: useTLS,
             cleanSession: cleansession,
             onSuccess: onConnect,
@@ -34,17 +32,17 @@
             options.userName = username;
             options.password = password;
         }
-        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = "Host="+ host + ", port=" + port + ", path=" + path + " TLS = " + useTLS + " username=" + username + " password=" + password;
+//        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = "Host="+ host + ", port=" + port + ", path=" + path + " TLS = " + useTLS + " username=" + username + " password=" + password;
         mqtt.connect(options);
     }
 
     function onConnect() {
-        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = "Waiing for " + topic + " message";
+//        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = "Waiing for " + topic + " message";
         mqtt.subscribe(topic, {qos: 0});
     }
 
     function onConnectionLost(response) {
-        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = "Нет связи с MQTT";
+ //       document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = "Нет связи с MQTT";
         setTimeout(MQTTconnect, reconnectTimeout);
 
     };
@@ -58,18 +56,19 @@
 
         var topic = message.destinationName;
         var payload = message.payloadString;
-        var result1 = payload.split("T");
-        var timestamp = parseInt(result1[1]);
+//        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = topic  + " " + payload;
+        var result1 = payload.split("S");
+        var temperature = result1[0];
+        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = "Температура в доме " + temperature;
+        var result2 = result1[1].split("T");
+        var sensorID = result2[0];
+        document.querySelectorAll('.temperature_sensor_id')[0].innerHTML = "измерена датчиком " + sensorID;
+        var timestamp = parseInt(result2[1]);
         sec = timestamp % 60;
         timestamp = Math.floor(timestamp / 60);
         min = timestamp % 60;
         timestamp = Math.floor(timestamp / 60);
         hour = 7 + timestamp % 24;
-        var result2 = result1.split("S");
-        var temperature = result2[0];
-        var sensorID = result2[1];
-        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = "Температура в доме " + temperature;
-        document.querySelectorAll('.temperature_sensor_id')[0].innerHTML = "измерена датчиком " + sensorID;
         document.querySelectorAll('.measurement_timestamp')[0].innerHTML = "в " + harold(hour) + ":" + harold(min) + ":" + harold(sec);
   
         function harold(standIn) {
