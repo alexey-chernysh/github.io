@@ -15,18 +15,16 @@
 			host,
 			port,
 			path,
-			"", 10)
+//			"", 10)
 //			"web_" + parseInt(Math.random() * 100, 10)
+			"web_" + parseInt(Math.random() * 100,)
 	);
         var options = {
-            timeout: 3,
+//            timeout: 3,
             useSSL: useTLS,
             cleanSession: cleansession,
             onSuccess: onConnect,
-            onFailure: function (message) {
-                $('#status').val("Connection failed: " + message.errorMessage + "Retrying");
-                setTimeout(MQTTconnect, reconnectTimeout);
-            }
+            onFailure: onFailure
         };
 
         mqtt.onConnectionLost = onConnectionLost;
@@ -54,6 +52,11 @@
 
     };
 
+    function onFailure(message) {
+//       $('#status').val("Connection failed: " + message.errorMessage + "Retrying");
+       setTimeout(MQTTconnect, reconnectTimeout);
+    }
+    
     function onMessageArrived(message) {
 
         var topic = message.destinationName;
