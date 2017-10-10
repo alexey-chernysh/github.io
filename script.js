@@ -42,7 +42,7 @@
     function onConnect() {
 //        $('#status').val('OK');
         // Connection succeeded; subscribe to our topic
-        mqtt.subscribe(topic, {qos: 1});
+        mqtt.subscribe(topic, {qos: 0});
     }
 
     function onConnectionLost(response) {
