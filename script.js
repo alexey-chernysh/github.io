@@ -56,29 +56,7 @@
 
         var topic = message.destinationName;
         var payload = message.payloadString;
-//        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = topic  + " " + payload;
-        var result1 = payload.split("S");
-        var temperature = result1[0];
-        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = "Температура в доме " + temperature;
-        var result2 = result1[1].split("T");
-        var sensorID = result2[0];
-        document.querySelectorAll('.temperature_sensor_id')[0].innerHTML = "измерена датчиком " + sensorID;
-        var timestamp = parseInt(result2[1]);
-        sec = timestamp % 60;
-        timestamp = Math.floor(timestamp / 60);
-        min = timestamp % 60;
-        timestamp = Math.floor(timestamp / 60);
-        hour = 7 + timestamp % 24;
-        document.querySelectorAll('.measurement_timestamp')[0].innerHTML = "в " + harold(hour) + ":" + harold(min) + ":" + harold(sec);
-  
-        function harold(standIn) {
-            if (standIn < 10) {
-                standIn = '0' + standIn;
-            }
-            return standIn;
-        }
- //       $('#ws').prepend('<li>' + topic + ' = ' + result[0] + " at " + result[1] + '</li>');
- //       $('#indoor_temperature').val(result[0]);
+        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = "Температура в доме " + payload;
     };
 
 
