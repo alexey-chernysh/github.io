@@ -56,7 +56,7 @@
 
         var topic = message.destinationName;
         var payload = message.payloadString;
-        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = "Температура в доме " + payload;
+        document.querySelectorAll('.measured_indoor_temperature')[0].innerHTML = "Т = " + payload + "C";
     };
 
 
